@@ -8,7 +8,7 @@ export default function Slider() {
 
     const slides = [
         '/Slider1.jpg',
-        '/Slider2.jpg',
+        '/Slider2.jpg'
     ]
 
     useEffect(() => {

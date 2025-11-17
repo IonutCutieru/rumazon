@@ -7,12 +7,12 @@ export default function ProductGrid({ viewMode = 'grid3', sortBy = 'default' }) 
   const [cart, setCart] = useState([])
 
   const products = [
-    { id: 1, name: 'Producto 1', price: 29.99, image: '/Producto1.jpg' },
-    { id: 2, name: 'Producto 2', price: 39.99, image: '/Producto2.jpg' },
-    { id: 3, name: 'Producto 3', price: 49.99, image: '/Producto3.jpg' },
-    { id: 4, name: 'Producto 4', price: 59.99, image: '/Producto4.jpg' },
-    { id: 5, name: 'Producto 5', price: 69.99, image: '/Producto5.jpg' },
-    { id: 6, name: 'Producto 6', price: 79.99, image: '/Producto6.jpg' },
+    { id: 1, name: 'Maquinilla electronica', price: 19.99, image: '/Producto1.jpg' },
+    { id: 2, name: 'Plancha de pelo', price: 30.99, image: '/Producto2.jpg' },
+    { id: 3, name: 'Soporte de vino', price: 12.99, image: '/Producto3.jpg' },
+    { id: 4, name: 'Mystery Box', price: 15.00, image: '/Producto4.jpg' },
+    { id: 5, name: 'Vertidor de vino', price: 14.99, image: '/Producto5.jpg' },
+    { id: 6, name: 'Rama foto digital', price: 22.99, image: '/Producto6.jpg' },
   ]
 
   // Ordenar productos según el filtro
@@ -57,7 +57,7 @@ export default function ProductGrid({ viewMode = 'grid3', sortBy = 'default' }) 
             </div>
             <div className="product-info">
               <h3 className="product-name">{product.name}</h3>
-              <p className="product-price">${product.price.toFixed(2)}</p>
+              <p className="product-price">€{product.price.toFixed(2)}</p>
             </div>
           </div>
         ))}
