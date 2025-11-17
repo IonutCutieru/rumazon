@@ -7,9 +7,8 @@ export default function Slider() {
     const [currentSlide, setCurrentSlide] = useState(0)
 
     const slides = [
-        '/Slider1.png',
-        '/PlantillaSlider.jpg',
-        '/PlantillaSlider.jpg',
+        '/Slider1.jpg',
+        '/Slider2.jpg',
     ]
 
     useEffect(() => {
@@ -43,7 +42,7 @@ export default function Slider() {
                             src={slide}
                             alt={`Slide ${index + 1}`}
                             fill
-                            style={{ objectFit: 'fill' }}
+                            style={{ objectFit: 'cover' }}
                             priority={index === 0}
                         />
                     </div>
