@@ -4,8 +4,8 @@ import { FiMail, FiLock } from "react-icons/fi";
 
 export default function LoginPage() {
   const [form, setForm] = useState({
-    gmail: "",
-    contrasena: "",
+    email: "",
+    password: "",
   });
 
   const [mensaje, setMensaje] = useState("");
@@ -53,9 +53,9 @@ export default function LoginPage() {
           <FiMail className="text-gray-500 mr-3" />
           <input
             type="email"
-            name="gmail"
+            name="email"
             placeholder="Correo electrónico"
-            value={form.gmail}
+            value={form.email}
             onChange={handleChange}
             className="bg-transparent outline-none w-full"
             required
@@ -67,9 +67,9 @@ export default function LoginPage() {
           <FiLock className="text-gray-500 mr-3" />
           <input
             type="password"
-            name="contrasena"
+            name="password"
             placeholder="Contraseña"
-            value={form.contrasena}
+            value={form.password}
             onChange={handleChange}
             className="bg-transparent outline-none w-full"
             required

@@ -1,6 +1,7 @@
 'use client'
 import { useState, useMemo } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import './productGrid.css'
 
 export default function ProductGrid({ viewMode = 'grid3', sortBy = 'default' }) {
@@ -40,26 +41,31 @@ export default function ProductGrid({ viewMode = 'grid3', sortBy = 'default' }) 
     <section className="product-section">
       <div className={`products-container ${viewMode}`}>
         {sortedProducts.map((product) => (
-          <div key={product.id} className="product-card">
-            <div className="product-image-wrapper">
-              <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                style={{ objectFit: 'fill' }}
-              />
-              <button 
-                className="add-to-cart-btn"
-                onClick={() => addToCart(product)}
-              >
-                +
-              </button>
+          <Link key={product.id} href={`/producto/${product.id}`} style={{ textDecoration: 'none' }}>
+            <div className="product-card">
+              <div className="product-image-wrapper">
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
+                <button 
+                  className="add-to-cart-btn"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    addToCart(product)
+                  }}
+                >
+                  +
+                </button>
+              </div>
+              <div className="product-info">
+                <h3 className="product-name">{product.name}</h3>
+                <p className="product-price">€{product.price.toFixed(2)}</p>
+              </div>
             </div>
-            <div className="product-info">
-              <h3 className="product-name">{product.name}</h3>
-              <p className="product-price">€{product.price.toFixed(2)}</p>
-            </div>
-          </div>
+          </Link>
         ))}
       </div>
     </section>

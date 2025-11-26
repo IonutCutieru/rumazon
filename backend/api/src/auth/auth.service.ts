@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { UsuarioService } from 'src/usuario/usuario.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -15,7 +15,7 @@ export class AuthService {
   async register(dto: RegisterDto) {
     const userExist = await this.usuarioService.findByEmail(dto.email);
     if (userExist) {
-      throw new UnauthorizedException('El email ya está registrado');
+      throw new BadRequestException('El email ya está registrado');
     }
 
     const hashedPassword = await bcrypt.hash(dto.password, 10);
@@ -23,6 +23,7 @@ export class AuthService {
     const user = await this.usuarioService.create({
       ...dto,
       password: hashedPassword,
+      rol: 'comprador',   // <-- por defecto
     });
 
     return { message: 'Usuario registrado correctamente', user };
@@ -34,16 +35,16 @@ export class AuthService {
       throw new UnauthorizedException('Credenciales incorrectas');
     }
 
-    const passwordMatch = await bcrypt.compare(
-      dto.password,
-      user.password,
-    );
-
+    const passwordMatch = await bcrypt.compare(dto.password, user.password);
     if (!passwordMatch) {
       throw new UnauthorizedException('Credenciales incorrectas');
     }
 
-    const payload = { id: user.id, email: user.email };
+    const payload = {
+      id_usuario: user.id_usuario,
+      email: user.email,
+      rol: user.rol,
+    };
 
     const token = await this.jwtService.signAsync(payload);
 
@@ -54,3 +55,4 @@ export class AuthService {
     };
   }
 }
+

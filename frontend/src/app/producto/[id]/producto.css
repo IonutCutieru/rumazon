@@ -1,0 +1,325 @@
+.producto-main {
+  padding-top: 56px;
+  min-height: 100vh;
+  color: #0D3B66;
+  margin-top: 40px;
+}
+
+.producto-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+/* ===== LADO IZQUIERDO ===== */
+.producto-left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.producto-image-container {
+  width: 100%;
+  max-width: 450px;
+  height: 450px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 12px 30px rgba(11, 26, 38, 0.2);
+  background: #f3f6f8;
+}
+
+.producto-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.producto-nombre {
+  font-size: 1.8rem;
+  margin: 0;
+  font-weight: 700;
+  color: #0D3B66;
+  text-align: center;
+}
+
+/* Selector de cantidad */
+.cantidad-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.cantidad-selector label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0D3B66;
+}
+
+.cantidad-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.cantidad-btn {
+  background: #0D3B66;
+  color: #fff;
+  border: 2px solid #3AAFA9;
+  width: 45px;
+  height: 45px;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cantidad-btn:hover {
+  background: #3AAFA9;
+  transform: scale(1.05);
+}
+
+.cantidad-input {
+  width: 60px;
+  height: 45px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  border: 2px solid #3AAFA9;
+  border-radius: 6px;
+  background: #0D3B66;
+  color: #fff;
+}
+
+/* ===== LADO DERECHO ===== */
+.producto-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: 100%;
+}
+
+/* Caja info con precio */
+.producto-info-box {
+  background: rgba(13, 59, 102, 0.15);
+  border: 2px solid #3AAFA9;
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  text-align: center;
+}
+
+.producto-precio {
+  font-size: 2.2rem;
+  margin: 0;
+  color: #F95738;
+  font-weight: 700;
+}
+
+.producto-descripcion {
+  line-height: 1.6;
+  color: #0D3B66;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.producto-descripcion p {
+  margin: 0;
+}
+
+.btn-agregar-carrito {
+  background: #F95738;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.btn-agregar-carrito:hover {
+  background: #ff785e;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(249, 87, 56, 0.3);
+}
+
+/* ===== CHAT ===== */
+.chat-container {
+  background: rgba(13, 59, 102, 0.12);
+  border: 2px solid #3AAFA9;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  height: 400px;
+  overflow: hidden;
+}
+
+.chat-header {
+  background: #0D3B66;
+  padding: 1rem;
+  border-bottom: 2px solid #3AAFA9;
+  text-align: center;
+}
+
+.chat-header h4 {
+  margin: 0;
+  color: #3AAFA9;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.chat-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #0D3B66;
+}
+
+.chat-placeholder p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.chat-message {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+
+.chat-message.user {
+  justify-content: flex-end;
+}
+
+.chat-message p {
+  max-width: 80%;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.chat-message.user p {
+  background: #F95738;
+  color: #fff;
+  border-radius: 8px 0 8px 8px;
+  text-align: center;
+}
+
+.chat-message.bot p {
+  background: rgba(58, 175, 169, 0.3);
+  color: #0D3B66;
+  border-radius: 0 8px 8px 8px;
+  text-align: center;
+}
+
+/* Input del chat */
+.chat-input-container {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-top: 2px solid #3AAFA9;
+  background: rgba(13, 59, 102, 0.08);
+}
+
+.chat-input {
+  flex: 1;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid #3AAFA9;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #0D3B66;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.chat-input::placeholder {
+  color: #0D3B66;
+  opacity: 0.6;
+}
+
+.chat-input:focus {
+  outline: none;
+  border-color: #F95738;
+  box-shadow: 0 0 0 2px rgba(249, 87, 56, 0.2);
+}
+
+.chat-send-btn {
+  background: #F95738;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.chat-send-btn:hover {
+  background: #ff785e;
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .producto-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .producto-image-container {
+    max-width: 100%;
+  }
+
+  .chat-container {
+    height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .producto-container {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .producto-nombre {
+    font-size: 1.4rem;
+  }
+
+  .producto-image-container {
+    height: 300px;
+  }
+
+  .producto-precio {
+    font-size: 1.8rem;
+  }
+
+  .chat-container {
+    height: 250px;
+  }
+}

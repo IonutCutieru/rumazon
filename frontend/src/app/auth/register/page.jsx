@@ -6,8 +6,8 @@ export default function RegisterPage() {
   const [form, setForm] = useState({
     nombre: "",
     usuario: "",
-    gmail: "",
-    contrasenia: "",
+    email: "",
+    password: "",
   });
 
   const [mensaje, setMensaje] = useState("");
@@ -81,9 +81,9 @@ export default function RegisterPage() {
           <FiMail className="text-gray-500 mr-3" />
           <input
             type="email"
-            name="gmail"
+            name="email"
             placeholder="Correo electrónico"
-            value={form.gmail}
+            value={form.email}
             onChange={handleChange}
             className="bg-transparent outline-none w-full"
             required
@@ -95,9 +95,9 @@ export default function RegisterPage() {
           <FiLock className="text-gray-500 mr-3" />
           <input
             type="password"
-            name="contrasenia"
+            name="password"
             placeholder="Contraseña"
-            value={form.contrasenia}
+            value={form.password}
             onChange={handleChange}
             className="bg-transparent outline-none w-full"
             required
