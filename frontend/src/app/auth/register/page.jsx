@@ -1,4 +1,5 @@
 "use client";
+import "./register.css";
 import { useState } from "react";
 import { FiUser, FiMail, FiLock } from "react-icons/fi";
 
@@ -41,85 +42,76 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#e9cca7] flex items-center justify-center p-6">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-sm"
-      >
-        <h1 className="text-2xl font-bold mb-6 text-center">Crear cuenta</h1>
+    <div className="register-container">
+      <form onSubmit={handleSubmit} className="register-form">
+        
+        <h1 className="register-title">Crear cuenta</h1>
 
         {/* Nombre */}
-        <div className="flex items-center bg-gray-100 p-3 rounded-xl mb-3">
-          <FiUser className="text-gray-500 mr-3" />
+        <div className="input-group">
+          <FiUser className="input-icon" />
           <input
             type="text"
             name="nombre"
             placeholder="Nombre completo"
             value={form.nombre}
             onChange={handleChange}
-            className="bg-transparent outline-none w-full"
+            className="input-field"
             required
           />
         </div>
 
         {/* Usuario */}
-        <div className="flex items-center bg-gray-100 p-3 rounded-xl mb-3">
-          <FiUser className="text-gray-500 mr-3" />
+        <div className="input-group">
+          <FiUser className="input-icon" />
           <input
             type="text"
             name="usuario"
             placeholder="Nombre de usuario"
             value={form.usuario}
             onChange={handleChange}
-            className="bg-transparent outline-none w-full"
+            className="input-field"
             required
           />
         </div>
 
-        {/* Gmail */}
-        <div className="flex items-center bg-gray-100 p-3 rounded-xl mb-3">
-          <FiMail className="text-gray-500 mr-3" />
+        {/* Email */}
+        <div className="input-group">
+          <FiMail className="input-icon" />
           <input
             type="email"
             name="email"
             placeholder="Correo electrónico"
             value={form.email}
             onChange={handleChange}
-            className="bg-transparent outline-none w-full"
+            className="input-field"
             required
           />
         </div>
 
         {/* Contraseña */}
-        <div className="flex items-center bg-gray-100 p-3 rounded-xl mb-5">
-          <FiLock className="text-gray-500 mr-3" />
+        <div className="input-group">
+          <FiLock className="input-icon" />
           <input
             type="password"
             name="password"
             placeholder="Contraseña"
             value={form.password}
             onChange={handleChange}
-            className="bg-transparent outline-none w-full"
+            className="input-field"
             required
           />
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 transition"
-        >
+        <button type="submit" className="register-btn">
           Registrarse
         </button>
 
-        {mensaje && (
-          <p className="text-center mt-4 font-semibold">{mensaje}</p>
-        )}
+        {mensaje && <p className="register-message">{mensaje}</p>}
 
-        <p className="text-sm text-center mt-4">
+        <p className="login-text">
           ¿Ya tienes cuenta?{" "}
-          <a href="/auth/login" className="text-red-600 font-semibold">
-            Inicia sesión
-          </a>
+          <a href="/auth/login">Inicia sesión</a>
         </p>
       </form>
     </div>

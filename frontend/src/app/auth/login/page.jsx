@@ -1,4 +1,5 @@
 "use client";
+import "./login.css";
 import { useState } from "react";
 import { FiMail, FiLock } from "react-icons/fi";
 
@@ -41,57 +42,49 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#e9cca7] flex items-center justify-center p-6">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-sm"
-      >
-        <h1 className="text-2xl font-bold mb-6 text-center">Iniciar sesión</h1>
+    <div className="login-container">
+      <form className="login-form" onSubmit={handleSubmit}>
+        <h1 className="login-title">Iniciar sesión</h1>
 
-        {/* Gmail */}
-        <div className="flex items-center bg-gray-100 p-3 rounded-xl mb-3">
-          <FiMail className="text-gray-500 mr-3" />
+        {/* Email */}
+        <div className="input-group">
+          <FiMail className="input-icon" />
           <input
             type="email"
             name="email"
             placeholder="Correo electrónico"
             value={form.email}
             onChange={handleChange}
-            className="bg-transparent outline-none w-full"
             required
+            className="input-field"
           />
         </div>
 
-        {/* Contraseña */}
-        <div className="flex items-center bg-gray-100 p-3 rounded-xl mb-5">
-          <FiLock className="text-gray-500 mr-3" />
+        {/* Password */}
+        <div className="input-group">
+          <FiLock className="input-icon" />
           <input
             type="password"
             name="password"
             placeholder="Contraseña"
             value={form.password}
             onChange={handleChange}
-            className="bg-transparent outline-none w-full"
             required
+            className="input-field"
           />
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-red-600 text-white py-3 rounded-xl hover:bg-red-700 transition"
-        >
+        <button type="submit" className="login-btn">
           Entrar
         </button>
 
         {mensaje && (
-          <p className="text-center mt-4 font-semibold">{mensaje}</p>
+          <p className="login-message">{mensaje}</p>
         )}
 
-        <p className="text-sm text-center mt-4">
+        <p className="register-text">
           ¿No tienes cuenta?{" "}
-          <a href="/auth/register" className="text-red-600 font-semibold">
-            Regístrate
-          </a>
+          <a href="/auth/register">Regístrate</a>
         </p>
       </form>
     </div>

@@ -1,62 +1,85 @@
-'use client'
-import { useState } from 'react'
-import Image from 'next/image'
-import './producto.css'
+'use client';
+import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
+import Image from 'next/image';
+import { v4 as uuidv4 } from 'uuid';
+import './producto.css';
 
-export default async function ProductoPage({ params }) {
-  const { id } = await params
+export default function ProductoPage() {
+  const params = useParams();
+  const id = Number(params.id);
 
-const products = {
+  const products = {
     1: { id: 1, name: 'Maquinilla electronica', price: 19.99, image: '/Producto1.jpg', description: 'Corta y afeita con precisión. Ideal para uso diario.' },
     2: { id: 2, name: 'Plancha de pelo', price: 30.99, image: '/Producto2.jpg', description: 'Alisado profesional y acabado brillante.' },
     3: { id: 3, name: 'Soporte de vino', price: 12.99, image: '/Producto3.jpg', description: 'Diseño elegante para mostrar tus botellas.' },
     4: { id: 4, name: 'Mystery Box', price: 15.00, image: '/Producto4.jpg', description: 'Caja sorpresa con artículos seleccionados.' },
     5: { id: 5, name: 'Vertidor de vino', price: 14.99, image: '/Producto5.jpg', description: 'Vertido sin goteo para servir con estilo.' },
     6: { id: 6, name: 'Rama foto digital', price: 22.99, image: '/Producto6.jpg', description: 'Marco digital para tus recuerdos favoritos.' },
-}
+  };
 
-  const product = products[id]
+  const product = products[id];
 
   if (!product) {
-    return <div style={{ color: '#fff', textAlign: 'center', paddingTop: '100px' }}>Producto no encontrado</div>
+    return <div style={{ color: '#fff', textAlign: 'center', paddingTop: '100px' }}>Producto no encontrado</div>;
   }
 
-  return (
-    <ProductoContent product={product} />
-  )
+  return <ProductoContent product={product} />;
 }
 
 function ProductoContent({ product }) {
-  const [cantidad, setCantidad] = useState(1)
-  const [message, setMessage] = useState('')
-  const [messages, setMessages] = useState([])
+  const [cantidad, setCantidad] = useState(1);
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
+  const [sessionId, setSessionId] = useState('');
 
-  const sumarCantidad = () => setCantidad(c => c + 1)
-  const restarCantidad = () => setCantidad(c => c > 1 ? c - 1 : 1)
-
-  const handleSendMessage = () => {
-    if (message.trim()) {
-      setMessages([...messages, { text: message, sender: 'user' }])
-      setMessage('')
+  useEffect(() => {
+    let id = localStorage.getItem('sessionId');
+    if (!id) {
+      id = uuidv4();
+      localStorage.setItem('sessionId', id);
     }
-  }
+    setSessionId(id);
+  }, []);
+
+  const sumarCantidad = () => setCantidad(c => c + 1);
+  const restarCantidad = () => setCantidad(c => (c > 1 ? c - 1 : 1));
+
+  const handleSendMessage = async () => {
+    if (!message.trim()) return;
+
+    setMessages(prev => [...prev, { text: message, sender: 'user' }]);
+    const userMessage = message;
+    setMessage('');
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMessage, sessionId })
+      });
+
+      const data = await res.json();
+
+      if (data.reply) {
+        setMessages(prev => [...prev, { text: data.reply, sender: 'agent' }]);
+      } else {
+        setMessages(prev => [...prev, { text: 'No hay respuesta del asistente', sender: 'agent' }]);
+      }
+    } catch (error) {
+      console.error(error);
+      setMessages(prev => [...prev, { text: 'Error al conectar con el asistente', sender: 'agent' }]);
+    }
+  };
 
   return (
     <main className="producto-main">
       <section className="producto-container">
-        {/* Lado izquierdo - Imagen y cantidad */}
         <div className="producto-left">
           <div className="producto-image-container">
-            <Image
-              src={product.image}
-              alt={product.name}
-              width={400}
-              height={400}
-              className="producto-image"
-            />
+            <Image src={product.image} alt={product.name} width={400} height={400} className="producto-image" />
           </div>
           <h2 className="producto-nombre">{product.name}</h2>
-
           <div className="cantidad-selector">
             <label>Cantidad:</label>
             <div className="cantidad-controls">
@@ -67,22 +90,15 @@ function ProductoContent({ product }) {
           </div>
         </div>
 
-        {/* Lado derecho */}
         <div className="producto-right">
-          {/* Cuadrado con precio y descripción */}
           <div className="producto-info-box">
             <h3 className="producto-precio">€{product.price.toFixed(2)}</h3>
-            <div className="producto-descripcion">
-              <p>{product.description}</p>
-            </div>
+            <div className="producto-descripcion"><p>{product.description}</p></div>
             <button className="btn-agregar-carrito">Agregar al carrito</button>
           </div>
 
-          {/* Chat / Asistente */}
           <div className="chat-container">
-            <div className="chat-header">
-              <h4>Asistente de ventas</h4>
-            </div>
+            <div className="chat-header"><h4>Asistente de ventas</h4></div>
             <div className="chat-messages">
               {messages.length === 0 ? (
                 <div className="chat-placeholder">
@@ -111,5 +127,5 @@ function ProductoContent({ product }) {
         </div>
       </section>
     </main>
-  )
+  );
 }

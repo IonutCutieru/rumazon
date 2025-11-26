@@ -1,0 +1,125 @@
+/* Fondo animado con degradado */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background: linear-gradient(135deg, #0D3B66, #F2780C);
+  background-size: 200% 200%;
+  animation: bgMove 6s ease-in-out infinite;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Contenedor del formulario */
+.login-form {
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  animation: fadeIn 0.7s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Título */
+.login-title {
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  color: #0D3B66;
+  margin-bottom: 25px;
+}
+
+/* Campos de entrada */
+.input-group {
+  display: flex;
+  align-items: center;
+  background: #f2f2f2;
+  padding: 12px 15px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  transition: all 0.3s ease;
+}
+
+.input-group:hover {
+  background: #e8e8e8;
+}
+
+.input-icon {
+  font-size: 20px;
+  margin-right: 12px;
+  color: #666;
+}
+
+.input-field {
+  border: none;
+  outline: none;
+  background: transparent;
+  flex: 1;
+  font-size: 15px;
+}
+
+.input-field:focus {
+  color: #0D3B66;
+}
+
+/* Botón */
+.login-btn {
+  width: 100%;
+  padding: 13px;
+  background: #0D3B66;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.login-btn:hover {
+  background: #F2780C;
+  transform: scale(1.03);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Mensajes */
+.login-message {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Enlace registro */
+.register-text {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.register-text a {
+  color: #0D3B66;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.25s;
+}
+
+.register-text a:hover {
+  color: #F2780C;
+  text-decoration: underline;
+}
