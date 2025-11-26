@@ -19,4 +19,8 @@ export class Producto {
 
   @Column()
   categoria: string;
+
+  @Column({ nullable: true })
+  imagen: string;
 }
+
