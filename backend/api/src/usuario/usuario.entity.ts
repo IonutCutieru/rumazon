@@ -1,15 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Pedido } from '../pedido/pedido.entity';
 
 @Entity('usuario')
 export class Usuario {
-  @PrimaryGeneratedColumn({ name: 'id_usuario' })
+
+  @PrimaryGeneratedColumn()
   id_usuario: number;
 
   @Column()
   nombre: string;
-
-  @Column()
-  usuario: string;
 
   @Column()
   email: string;
@@ -19,5 +18,9 @@ export class Usuario {
 
   @Column({ default: 'comprador' })
   rol: string;
+
+  // 👇 ESTA RELACIÓN ES LA QUE TE FALTABA
+  @OneToMany(() => Pedido, pedido => pedido.usuario)
+  pedidos: Pedido[];
 }
 

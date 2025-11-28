@@ -15,7 +15,13 @@ export class ProductoService {
     return this.repo.find();
   }
 
-  // Obtener un producto por su ID
+  // Crear un producto
+  create(data: Partial<Producto>) {
+    const p = this.repo.create(data);
+    return this.repo.save(p);
+  }
+
+  // Buscar un producto por ID
   async findOne(id: number) {
     const producto = await this.repo.findOne({
       where: { id_producto: id },
@@ -28,23 +34,17 @@ export class ProductoService {
     return producto;
   }
 
-  // Crear un producto
-  create(data: Partial<Producto>) {
-    const p = this.repo.create(data);
-    return this.repo.save(p);
-  }
-
   // Actualizar un producto
   async update(id: number, data: Partial<Producto>) {
     const producto = await this.findOne(id);
-
-    const updated = Object.assign(producto, data);
-    return this.repo.save(updated);
+    Object.assign(producto, data);
+    return this.repo.save(producto);
   }
 
   // Eliminar un producto
-  async remove(id: number) {
+  async delete(id: number) {
     const producto = await this.findOne(id);
     return this.repo.remove(producto);
   }
 }
+

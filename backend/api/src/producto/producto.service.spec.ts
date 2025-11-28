@@ -1,18 +1,49 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ProductoService } from './producto.service';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Producto } from './producto.entity';
 
-describe('ProductoService', () => {
-  let service: ProductoService;
+@Injectable()
+export class ProductoService {
+  constructor(
+    @InjectRepository(Producto)
+    private repo: Repository<Producto>,
+  ) {}
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [ProductoService],
-    }).compile();
+  // Obtener todos los productos
+  findAll() {
+    return this.repo.find();
+  }
 
-    service = module.get<ProductoService>(ProductoService);
-  });
+  // Crear un producto
+  create(data: Partial<Producto>) {
+    const p = this.repo.create(data);
+    return this.repo.save(p);
+  }
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-});
+  // Buscar un producto por ID
+  async findOne(id: number) {
+    const producto = await this.repo.findOne({
+      where: { id_producto: id },
+    });
+
+    if (!producto) {
+      throw new NotFoundException('Producto no encontrado');
+    }
+
+    return producto;
+  }
+
+  // Actualizar un producto
+  async update(id: number, data: Partial<Producto>) {
+    const producto = await this.findOne(id);
+    Object.assign(producto, data);
+    return this.repo.save(producto);
+  }
+
+  // Eliminar un producto
+  async delete(id: number) {
+    const producto = await this.findOne(id);
+    return this.repo.remove(producto);
+  }
+}

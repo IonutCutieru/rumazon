@@ -5,8 +5,17 @@ import { ProductoService } from './producto.service';
 import { ProductoController } from './producto.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Producto])],
+  imports: [
+    TypeOrmModule.forFeature([Producto])
+  ],
+
   providers: [ProductoService],
+
   controllers: [ProductoController],
+
+  exports: [
+    ProductoService,
+    TypeOrmModule  
+  ],
 })
 export class ProductoModule {}

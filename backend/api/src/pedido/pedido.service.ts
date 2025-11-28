@@ -1,48 +1,53 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { Pedido } from "./pedido.entity";
-import { PedidoProducto } from "../pedido_producto/pedido_producto.entity";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Pedido } from './pedido.entity';
 
 @Injectable()
 export class PedidoService {
-
   constructor(
     @InjectRepository(Pedido)
-    private pedidoRepo: Repository<Pedido>,
-
-    @InjectRepository(PedidoProducto)
-    private pedidoProductoRepo: Repository<PedidoProducto>,
+    private pedidoRepository: Repository<Pedido>,
   ) {}
 
-  // Obtener todos los pedidos con sus productos
-  findAll() {
-    return this.pedidoRepo.find({
-      relations: ['usuario', 'productos', 'productos.producto'],
+  // Listar todos los pedidos con sus relaciones
+  async findAll() {
+    return this.pedidoRepository.find({
+      relations: [
+        'usuario',                // Usuario propietario del pedido
+        'pedidoProductos',        // Relación intermedia
+        'pedidoProductos.producto' // Productos comprados
+      ],
       order: { fecha: 'DESC' }
     });
   }
 
-  // Obtener un pedido concreto
+  // Obtener un pedido concreto por su ID
   async findOne(id: number) {
-    const pedido = await this.pedidoRepo.findOne({
+    const pedido = await this.pedidoRepository.findOne({
       where: { id_pedido: id },
-      relations: ['usuario', 'productos', 'productos.producto']
+      relations: [
+        'usuario',
+        'pedidoProductos',
+        'pedidoProductos.producto'
+      ]
     });
 
-    if (!pedido) throw new NotFoundException('Pedido no encontrado');
+    if (!pedido) {
+      throw new NotFoundException('Pedido no encontrado');
+    }
 
     return pedido;
   }
 
-  // Contar pedidos
-  count() {
-    return this.pedidoRepo.count();
+  // (Opcional) Contar total pedidos (para estadísticas)
+  async count() {
+    return this.pedidoRepository.count();
   }
 
-  // Calcular total de ventas
+  // (Opcional) Calcular total de ventas
   async totalVentas() {
-    const pedidos = await this.pedidoRepo.find();
-    return pedidos.reduce((acc, p) => acc + Number(p.total), 0);
+    const pedidos = await this.pedidoRepository.find();
+    return pedidos.reduce((sum, p) => sum + Number(p.total), 0);
   }
 }

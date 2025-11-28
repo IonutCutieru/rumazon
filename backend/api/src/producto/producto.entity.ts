@@ -1,7 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { PedidoProducto } from '../pedido_producto/pedido_producto.entity';
 
 @Entity('producto')
 export class Producto {
+
   @PrimaryGeneratedColumn()
   id_producto: number;
 
@@ -22,5 +24,9 @@ export class Producto {
 
   @Column({ nullable: true })
   imagen: string;
+
+  @OneToMany(() => PedidoProducto, pp => pp.producto)
+  pedidoProductos: PedidoProducto[];
 }
+
 

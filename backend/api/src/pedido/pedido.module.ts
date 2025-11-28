@@ -9,6 +9,10 @@ import { PedidoService } from "./pedido.service";
     TypeOrmModule.forFeature([Pedido, PedidoProducto])
   ],
   providers: [PedidoService],
-  exports: [PedidoService]
+  
+  exports: [
+    PedidoService,
+    TypeOrmModule
+  ]
 })
 export class PedidoModule {}

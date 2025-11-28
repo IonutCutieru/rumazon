@@ -1,6 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { Pedido } from "../pedido/pedido.entity";
-import { Producto } from "../producto/producto.entity";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Pedido } from '../pedido/pedido.entity';
+import { Producto } from '../producto/producto.entity';
 
 @Entity('pedido_producto')
 export class PedidoProducto {
@@ -20,9 +20,15 @@ export class PedidoProducto {
   @Column('decimal', { precision: 10, scale: 2 })
   subtotal: number;
 
-  @ManyToOne(() => Pedido, (pedido) => pedido.productos)
+  // Relación con pedido
+  @ManyToOne(() => Pedido, pedido => pedido.pedidoProductos, {
+    onDelete: 'CASCADE',
+  })
   pedido: Pedido;
 
-  @ManyToOne(() => Producto, (producto) => producto.pedidos)
+  // Relación con producto
+  @ManyToOne(() => Producto, producto => producto.pedidoProductos, {
+    onDelete: 'CASCADE',
+  })
   producto: Producto;
 }
