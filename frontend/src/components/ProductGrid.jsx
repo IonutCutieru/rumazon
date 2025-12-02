@@ -1,73 +1,81 @@
-'use client'
-import { useState, useMemo } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import './productGrid.css'
+'use client';
+
+import { useState, useEffect, useMemo } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import './productGrid.css';
 
 export default function ProductGrid({ viewMode = 'grid3', sortBy = 'default' }) {
-  const [cart, setCart] = useState([])
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const products = [
-    { id: 1, name: 'Maquinilla electronica', price: 19.99, image: '/Producto1.jpg' },
-    { id: 2, name: 'Plancha de pelo', price: 30.99, image: '/Producto2.jpg' },
-    { id: 3, name: 'Soporte de vino', price: 12.99, image: '/Producto3.jpg' },
-    { id: 4, name: 'Mystery Box', price: 15.00, image: '/Producto4.jpg' },
-    { id: 5, name: 'Vertidor de vino', price: 14.99, image: '/Producto5.jpg' },
-    { id: 6, name: 'Rama foto digital', price: 22.99, image: '/Producto6.jpg' },
-  ]
+  // Cargar productos desde la API
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch('http://localhost:3001/productos');
+        const data = await res.json();
 
-  // Ordenar productos según el filtro
+        if (res.ok) setProducts(data);
+      } catch (err) {
+        console.error('Error cargando productos:', err);
+      }
+
+      setLoading(false);
+    };
+
+    fetchProducts();
+  }, []);
+
+  // Ordenar productos
   const sortedProducts = useMemo(() => {
-    const sorted = [...products]
-    
+    const sorted = [...products];
+
     switch (sortBy) {
       case 'price-low':
-        return sorted.sort((a, b) => a.price - b.price)
+        return sorted.sort((a, b) => a.precio - b.precio);
       case 'price-high':
-        return sorted.sort((a, b) => b.price - a.price)
+        return sorted.sort((a, b) => b.precio - a.precio);
       case 'alphabetic':
-        return sorted.sort((a, b) => a.name.localeCompare(b.name))
+        return sorted.sort((a, b) => a.nombre.localeCompare(b.nombre));
       default:
-        return sorted
+        return sorted;
     }
-  }, [sortBy])
+  }, [sortBy, products]);
 
-  const addToCart = (product) => {
-    setCart([...cart, product])
-    alert(`${product.name} añadido al carrito!`)
-  }
+  if (loading) return <p style={{ padding: 20 }}>Cargando productos...</p>;
+
+  if (products.length === 0)
+    return <p style={{ padding: 20 }}>No hay productos en la base de datos.</p>;
 
   return (
     <section className="product-section">
       <div className={`products-container ${viewMode}`}>
         {sortedProducts.map((product) => (
-          <Link key={product.id} href={`/producto/${product.id}`} style={{ textDecoration: 'none' }}>
+          <Link
+            key={product.id_producto}
+            href={`/producto/${product.id_producto}`}
+            style={{ textDecoration: 'none' }}
+          >
             <div className="product-card">
               <div className="product-image-wrapper">
                 <Image
-                  src={product.image}
-                  alt={product.name}
+                  src={product.imagen || "/placeholder.jpg"}
+                  alt={product.nombre}
                   fill
                   style={{ objectFit: 'cover' }}
                 />
-                <button 
-                  className="add-to-cart-btn"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    addToCart(product)
-                  }}
-                >
-                  +
-                </button>
               </div>
+
               <div className="product-info">
-                <h3 className="product-name">{product.name}</h3>
-                <p className="product-price">€{product.price.toFixed(2)}</p>
+                <h3 className="product-name">{product.nombre}</h3>
+                <p className="product-price">€{Number(product.precio).toFixed(2)}</p>
               </div>
             </div>
           </Link>
         ))}
       </div>
     </section>
-  )
+  );
 }
+
