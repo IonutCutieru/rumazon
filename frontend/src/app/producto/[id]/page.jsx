@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { v4 as uuidv4 } from 'uuid';
 import './producto.css';
+import { addToCart } from "../../../utils/cart";
 
 export default function ProductoPage() {
   const params = useParams();
@@ -39,6 +40,7 @@ function ProductoContent({ product }) {
       id = uuidv4();
       localStorage.setItem('sessionId', id);
     }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSessionId(id);
   }, []);
 
@@ -94,7 +96,7 @@ function ProductoContent({ product }) {
           <div className="producto-info-box">
             <h3 className="producto-precio">€{product.price.toFixed(2)}</h3>
             <div className="producto-descripcion"><p>{product.description}</p></div>
-            <button className="btn-agregar-carrito">Agregar al carrito</button>
+            <button className="btn-agregar-carrito" onClick={() => addToCart(producto)}>Agregar al carrito</button>
           </div>
 
           <div className="chat-container">

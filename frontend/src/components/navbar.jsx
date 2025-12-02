@@ -4,19 +4,28 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import "./navbar.css";
-import { isLoggedIn, logout } from "../utils/auth";
+import { isLoggedIn, logout, getUserRole } from "../utils/auth";
 
 const Navbar = () => {
   const [logged, setLogged] = useState(null);
+  const [role, setRole] = useState(null);
 
   useEffect(() => {
+    // Detectar si hay sesión activa
+    const loggedIn = isLoggedIn();
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setLogged(isLoggedIn());
+    setLogged(loggedIn);
+
+    if (loggedIn) {
+      const r = getUserRole();
+      setRole(r);
+    }
   }, []);
 
   const handleLogout = () => {
     logout();
     setLogged(false);
+    setRole(null);
   };
 
   return (
@@ -37,15 +46,23 @@ const Navbar = () => {
         <li><Link href="/">Inicio</Link></li>
         <li><Link href="/sobre-nosotros">Sobre nosotros</Link></li>
 
-        {logged === null ? (
-          // Mientras carga no muestra nada
-          null
-        ) : logged === false ? (
+        {/* 🟦 Si el usuario es admin → mostrar "Panel" */}
+        {logged && role === "admin" && (
+          <li>
+            <Link href="/admin" className="admin-panel-button">
+              Panel
+            </Link>
+          </li>
+        )}
+
+        {/* 🔴 Si NO está logueado → mostrar login/register */}
+        {logged === null ? null : !logged ? (
           <>
             <li><Link href="/auth/login">Iniciar Sesión</Link></li>
             <li><Link href="/auth/register">Registrarse</Link></li>
           </>
         ) : (
+          // 🟢 Si está logueado → botón cerrar sesión
           <li>
             <button
               onClick={handleLogout}
