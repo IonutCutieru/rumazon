@@ -2,7 +2,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
     font-size: 16px;
     line-height: 1.60;
-    color: #0B1A26; /* text dark */
+    color: #0B1A26; 
     background: #F4F8FB;
     background-attachment: fixed;
     min-height: 100vh;
@@ -10,7 +10,6 @@ body {
     padding: 0;
 }
 
-/* Productos section */
 .products-section {
   max-width: 100%;
   margin: 0 auto;
@@ -21,9 +20,8 @@ body {
   justify-items: center;
 }
 
-/* Sidebar de filtros - colores actualizados */
 .filters-sidebar {
-  background: rgba(13, 59, 102, 0.12); /* soft primary */
+  background: rgba(13, 59, 102, 0.12); 
   border-radius: 10px;
   padding: 0;
   height: fit-content;
@@ -35,7 +33,7 @@ body {
 }
 
 .filter-toggle {
-  background: #F95738; /* accent CTA */
+  background: #F95738; 
   color: #ffffff;
   border: none;
   width: 100%;
@@ -80,7 +78,7 @@ body {
 }
 
 .filter-title {
-  color: #F95738; /* accent */
+  color: #F95738; 
   font-size: 1.2rem;
   margin: 0 0 1rem;
   font-weight: 600;
@@ -108,17 +106,15 @@ body {
   accent-color: #F95738;
 }
 
-/* Productos main centering */
 .products-main {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
   width: 100%;
-  max-width: 1200px; /* centra el contenido */
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-/* Opciones de vista */
 .view-options {
   display: flex;
   gap: 0.75rem;

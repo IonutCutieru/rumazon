@@ -13,7 +13,6 @@ const Navbar = () => {
   useEffect(() => {
     // Detectar si hay sesión activa
     const loggedIn = isLoggedIn();
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLogged(loggedIn);
 
     if (loggedIn) {
@@ -46,7 +45,7 @@ const Navbar = () => {
         <li><Link href="/">Inicio</Link></li>
         <li><Link href="/sobre-nosotros">Sobre nosotros</Link></li>
 
-        {/* 🟦 Si el usuario es admin → mostrar "Panel" */}
+        {/*  Si el usuario es admin → mostrar "Panel" */}
         {logged && role === "admin" && (
           <li>
             <Link href="/admin" className="admin-panel-button">
@@ -55,14 +54,14 @@ const Navbar = () => {
           </li>
         )}
 
-        {/* 🔴 Si NO está logueado → mostrar login/register */}
+        {/*  Si NO está logueado → mostrar login/register */}
         {logged === null ? null : !logged ? (
           <>
             <li><Link href="/auth/login">Iniciar Sesión</Link></li>
             <li><Link href="/auth/register">Registrarse</Link></li>
           </>
         ) : (
-          // 🟢 Si está logueado → botón cerrar sesión
+          //  Si está logueado → botón cerrar sesión
           <li>
             <button
               onClick={handleLogout}

@@ -86,14 +86,14 @@
 .product-name {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #0D3B66; /* primary */
+  color: #0D3B66; 
   margin: 0;
 }
 
 .product-price {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #F95738; /* accent */
+  color: #F95738; 
   margin: 0;
 }
 
