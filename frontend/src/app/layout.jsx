@@ -4,6 +4,9 @@ import ClientNavbar from "../components/ClientNavbar";
 export const metadata = {
   title: "Rumazon",
   description: "Tienda online",
+  icons: {
+    icon: "/Icono.png",
+  },
 };
 
 export default function RootLayout({ children }) {

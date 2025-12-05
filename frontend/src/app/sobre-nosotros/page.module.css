@@ -52,9 +52,26 @@
   .teamGrid { grid-template-columns: 1fr; }
 }
 
-/* team card */
+.teamSection {
+  padding: 2rem;
+  text-align: center;
+}
+
+.teamTitle {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #0d3b66;
+}
+
+.teamGrid {
+  display: grid;
+  justify-content: center; 
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem; 
+}
+
 .teamCard {
-  background: rgba(13,59,102,0.18); /* soft primary */
+  background: rgba(13,59,102,0.18); 
   border-radius: 10px;
   padding: 1rem;
   text-align: center;
@@ -62,11 +79,33 @@
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .teamCard:hover {
   transform: translateY(-6px);
   box-shadow: 0 8px 24px rgba(11,26,38,0.14);
 }
 
-.teamImage { width: 100%; height: 180px; border-radius: 8px; overflow: hidden; margin-bottom: 0.75rem; }
-.memberName { margin: 0.25rem 0; font-size: 1.05rem; }
-.memberRole { margin: 0; color: #F95738; font-weight: 600; }
+.teamImage {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.teamImage img {
+  width: 100%;
+  height: auto;     
+  object-fit: cover; 
+  border-radius: 8px;
+}
+
+.memberName {
+  margin: 0.25rem 0; 
+  font-size: 1.05rem;
+}
+
+.memberRole {
+  margin: 0; 
+  color: #F95738; 
+  font-weight: 600;
+}

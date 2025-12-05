@@ -64,7 +64,6 @@ function ProductoContent({ product }) {
       id = uuidv4();
       localStorage.setItem('sessionId', id);
     }
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSessionId(id);
   }, []);
 

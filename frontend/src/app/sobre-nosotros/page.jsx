@@ -59,9 +59,8 @@ export default function About() {
 
         <div className={styles.teamGrid}>
           {[
-            { id: 1, name: 'Ana Pérez', role: 'Fundadora', img: '/team-1.jpg' },
-            { id: 2, name: 'Luis García', role: 'Operaciones', img: '/team-2.jpg' },
-            { id: 3, name: 'María López', role: 'Atención al cliente', img: '/team-3.jpg' },
+            { id: 1, name: 'Ionut Cutieru', role: 'CEO / Departamento IT', img: '/Ionut.png' },
+            { id: 2, name: 'Mario Alcaide', role: 'CEO / Departamento IT', img: '/Mario.jpg' },
           ].map(member => (
             <article key={member.id} className={styles.teamCard}>
               <div className={styles.teamImage}>
