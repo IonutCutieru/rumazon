@@ -2,17 +2,14 @@
 const nextConfig = {
   reactCompiler: true, // si realmente lo necesitas
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "encrypted-tbn0.gstatic.com",
-      },
-      {
-        protocol: "https",
-        hostname: "lh3.googleusercontent.com",
-      },
-    ],
-  },
+  remotePatterns: [
+    {
+      protocol: 'https',
+      hostname: '**',   // permite todos los dominios con HTTPS
+    },
+  ],
+}
+
 };
 
 export default nextConfig;

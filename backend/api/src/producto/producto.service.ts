@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import { Producto } from './producto.entity';
 
 @Injectable()
@@ -10,9 +10,20 @@ export class ProductoService {
     private repo: Repository<Producto>,
   ) {}
 
-  // Obtener todos los productos
-  findAll() {
-    return this.repo.find();
+  // Obtener todos los productos (opcional búsqueda q)
+  async findAll(q?: string) {
+    if (q && q.trim() !== '') {
+      const term = `%${q.trim()}%`;
+      return this.repo.find({
+        where: [
+          { nombre: Like(term) },
+          { descripcion: Like(term) }
+        ],
+        order: { id_producto: 'ASC' }
+      });
+    }
+
+    return this.repo.find({ order: { id_producto: 'ASC' } });
   }
 
   // Crear un producto
@@ -34,17 +45,14 @@ export class ProductoService {
     return producto;
   }
 
-  // Actualizar un producto
   async update(id: number, data: Partial<Producto>) {
     const producto = await this.findOne(id);
     Object.assign(producto, data);
     return this.repo.save(producto);
   }
 
-  // Eliminar un producto
   async delete(id: number) {
     const producto = await this.findOne(id);
     return this.repo.remove(producto);
   }
 }
-

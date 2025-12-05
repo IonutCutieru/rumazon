@@ -1,13 +1,14 @@
-import { Controller, Get, Post, Param, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Put, Delete, Query } from '@nestjs/common';
 import { ProductoService } from './producto.service';
 
 @Controller('productos')
 export class ProductoController {
   constructor(private readonly productoService: ProductoService) {}
 
+  // GET /productos?q=texto
   @Get()
-  findAll() {
-    return this.productoService.findAll();
+  findAll(@Query('q') q?: string) {
+    return this.productoService.findAll(q);
   }
 
   @Get(':id')

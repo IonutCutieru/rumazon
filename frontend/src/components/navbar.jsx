@@ -6,20 +6,16 @@ import Image from "next/image";
 import "./navbar.css";
 import { isLoggedIn, logout, getUserRole } from "../utils/auth";
 
-const Navbar = () => {
+export default function Navbar({ setSearchTerm }) {
   const [logged, setLogged] = useState(null);
   const [role, setRole] = useState(null);
 
   useEffect(() => {
-    // Detectar si hay sesión activa
     const loggedIn = isLoggedIn();
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLogged(loggedIn);
 
-    if (loggedIn) {
-      const r = getUserRole();
-      setRole(r);
-    }
+    if (loggedIn) setRole(getUserRole());
   }, []);
 
   const handleLogout = () => {
@@ -32,7 +28,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="navbar-logo">
         <Link href="/">
-          <Image 
+          <Image
             src="/Rumazon.png"
             alt="Rumazon Logo"
             width={360}
@@ -46,33 +42,20 @@ const Navbar = () => {
         <li><Link href="/">Inicio</Link></li>
         <li><Link href="/sobre-nosotros">Sobre nosotros</Link></li>
 
-        {/* 🟦 Si el usuario es admin → mostrar "Panel" */}
         {logged && role === "admin" && (
-          <li>
-            <Link href="/admin" className="admin-panel-button">
-              Panel
-            </Link>
-          </li>
+          <li><Link href="/admin">Panel</Link></li>
         )}
 
-        {/* 🔴 Si NO está logueado → mostrar login/register */}
-        {logged === null ? null : !logged ? (
+        {!logged ? (
           <>
             <li><Link href="/auth/login">Iniciar Sesión</Link></li>
             <li><Link href="/auth/register">Registrarse</Link></li>
           </>
         ) : (
-          // 🟢 Si está logueado → botón cerrar sesión
           <li>
             <button
               onClick={handleLogout}
-              style={{
-                background: "transparent",
-                border: "none",
-                color: "red",
-                cursor: "pointer",
-                fontSize: "16px"
-              }}
+              style={{ background: "none", border: "none", color: "red" }}
             >
               Cerrar Sesión
             </button>
@@ -82,11 +65,14 @@ const Navbar = () => {
         <li><Link href="/carrito">Carrito</Link></li>
       </ul>
 
+      {/* 🔍 BÚSQUEDA FUNCIONAL */}
       <div className="navbar-search">
-        <input type="text" placeholder="Buscar..." />
+        <input
+          type="text"
+          placeholder="Buscar..."
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
       </div>
     </nav>
   );
-};
-
-export default Navbar;
+}
